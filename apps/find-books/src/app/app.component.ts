@@ -7,6 +7,4 @@ import { Component } from '@angular/core';
   selector: 'fb-root',
   template: '<router-outlet></router-outlet>',
 })
-export class AppComponent {
-  title = 'find-books';
-}
+export class AppComponent {}

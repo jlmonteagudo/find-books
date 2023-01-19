@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BooksService } from './services/books.service';
 
 @Component({
   selector: 'fb-books',
@@ -9,4 +10,17 @@ import { CommonModule } from '@angular/common';
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BooksComponent {}
+export class BooksComponent {
+  private readonly booksService = inject(BooksService);
+
+  constructor() {
+    this.booksService
+      .find({
+        currentLanguageCode: 'en',
+        pageIndex: 0,
+        pageSize: 10,
+        searchTerm: 'Angular',
+      })
+      .subscribe(console.log);
+  }
+}
