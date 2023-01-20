@@ -10,7 +10,6 @@ import { PaginatorStore } from './paginator.store';
   imports: [CommonModule, MatPaginatorModule],
   template: `
     <mat-paginator
-      #paginator
       (page)="handlePageEvent($event)"
       [length]="length$ | async"
       [pageSize]="pageSize$ | async"
@@ -21,9 +20,6 @@ import { PaginatorStore } from './paginator.store';
       aria-label="Select page"
     >
     </mat-paginator>
-    <p>PAGINATOR LENGTH: {{ length$ | async }}</p>
-    <p>PAGINATOR SIZE: {{ pageSize$ | async }}</p>
-    <p>PAGINATOR INDEX: {{ pageIndex$ | async }}</p>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

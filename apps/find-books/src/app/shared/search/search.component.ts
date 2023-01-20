@@ -28,7 +28,6 @@ import { MatIconModule } from '@angular/material/icon';
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
-    <p>SEARCH TERM: {{ searchTerm$ | async }}</p>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -39,6 +38,5 @@ export class SearchComponent {
 
   handleSearchTermChanged(searchTerm: string) {
     this.searchStore.updateSearchTerm(searchTerm);
-    console.log(searchTerm);
   }
 }

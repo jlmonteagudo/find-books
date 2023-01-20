@@ -4,6 +4,7 @@ import { LanguageSelectorStore } from '../shared/language-selector/language-sele
 import { PaginatorStore } from '../shared/paginator/paginator.store';
 import { SearchStore } from '../shared/search/search.store';
 import { BooksComponent } from './books.component';
+import { BooksStore } from './books.store';
 
 export const bookRoutes: Route[] = [
   {
@@ -13,6 +14,7 @@ export const bookRoutes: Route[] = [
       provideComponentStore(LanguageSelectorStore),
       provideComponentStore(SearchStore),
       provideComponentStore(PaginatorStore),
+      provideComponentStore(BooksStore),
     ],
   },
 ];
