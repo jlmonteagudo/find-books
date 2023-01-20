@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ComponentStore, OnStoreInit } from '@ngrx/component-store';
+import { ComponentStore } from '@ngrx/component-store';
 import { Observable } from 'rxjs';
 import { Language } from './interfaces/language.interface';
 
@@ -20,10 +20,11 @@ const INITIAL_STATE = {
 };
 
 @Injectable()
-export class LanguageSelectorStore
-  extends ComponentStore<LanguageSelectorState>
-  implements OnStoreInit
-{
+export class LanguageSelectorStore extends ComponentStore<LanguageSelectorState> {
+  constructor() {
+    super(INITIAL_STATE);
+  }
+
   readonly currentLanguageCode$: Observable<string> = this.select(
     (state) => state.currentLanguageCode
   );
@@ -34,9 +35,5 @@ export class LanguageSelectorStore
 
   updateCurrentLanguageCode(currentLanguageCode: string) {
     this.patchState({ currentLanguageCode });
-  }
-
-  ngrxOnStoreInit() {
-    this.setState(INITIAL_STATE);
   }
 }

@@ -27,8 +27,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     PaginatorComponent,
   ],
   template: `
-    <fb-language-selector />
-    <br />
     <fb-search />
     <br />
     <fb-paginator />
