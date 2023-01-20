@@ -33,6 +33,9 @@ export class BooksStore extends ComponentStore<BooksState> {
   }
 
   readonly books$: Observable<Book[]> = this.select((state) => state.books);
+  readonly booksLoaded$: Observable<boolean> = this.select(
+    (state) => !!state.books.length
+  );
   readonly isLoading$: Observable<boolean> = this.select(
     (state) => state.isLoading
   );

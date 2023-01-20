@@ -14,6 +14,9 @@ import { PaginatorComponent } from '../shared/paginator/paginator.component';
 import { BooksStore } from './books.store';
 import { Book } from './interfaces/books-http-response.interface';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { SearchStore } from '../shared/search/search.store';
+import { PaginatorStore } from '../shared/paginator/paginator.store';
+import { BooksListComponent } from './components/books-list.component';
 
 @Component({
   selector: 'fb-books',
@@ -25,22 +28,21 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatProgressBarModule,
     SearchComponent,
     PaginatorComponent,
+    BooksListComponent,
   ],
   template: `
     <fb-search />
-    <br />
-    <fb-paginator />
-    <hr />
+    <fb-paginator *ngIf="booksLoaded$ | async" />
     <div>
       <mat-progress-bar
         mode="indeterminate"
         *ngIf="isLoading$ | async"
       ></mat-progress-bar>
-      <p>IS LOADING: {{ isLoading$ | async }}</p>
-      <p>BOOKS: {{ books$ | async | json }}</p>
+      <fb-books-list [books]="books$ | async" />
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [BooksStore, SearchStore, PaginatorStore],
 })
 export class BooksComponent implements OnInit, OnDestroy {
   private readonly booksStore = inject(BooksStore);
@@ -49,6 +51,7 @@ export class BooksComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   books$: Observable<Book[]> = this.booksStore.books$;
+  booksLoaded$: Observable<boolean> = this.booksStore.booksLoaded$;
   isLoading$: Observable<boolean> = this.booksStore.isLoading$;
 
   ngOnInit(): void {

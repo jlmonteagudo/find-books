@@ -9,18 +9,22 @@ import { Language } from './interfaces/language.interface';
   standalone: true,
   imports: [CommonModule, MatSelectModule],
   template: `
-    <mat-form-field appearance="fill">
-      <mat-select
-        [value]="currentLanguageCode$ | async"
-        (selectionChange)="setCurrentLanguageCode($event.value)"
-      >
-        <mat-option *ngFor="let lang of languages$ | async" [value]="lang.code">
-          {{ lang.displayName }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <mat-select
+      [value]="currentLanguageCode$ | async"
+      (selectionChange)="setCurrentLanguageCode($event.value)"
+    >
+      <mat-option *ngFor="let lang of languages$ | async" [value]="lang.code">
+        {{ lang.displayName }}
+      </mat-option>
+    </mat-select>
   `,
-  styles: [],
+  styles: [
+    `
+      mat-select {
+        width: 120px;
+      }
+    `,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LanguageSelectorComponent {
