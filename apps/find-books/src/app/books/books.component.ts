@@ -1,13 +1,26 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BooksService } from './services/books.service';
+import { LanguageSelectorComponent } from '../shared/language-selector/language-selector.component';
+import { SearchComponent } from '../shared/search/search.component';
+import { PaginatorComponent } from '../shared/paginator/paginator.component';
 
 @Component({
   selector: 'fb-books',
   standalone: true,
-  imports: [CommonModule],
-  template: ` <p>books works!</p> `,
-  styles: [],
+  imports: [
+    CommonModule,
+    LanguageSelectorComponent,
+    SearchComponent,
+    PaginatorComponent,
+  ],
+  template: `
+    <fb-language-selector />
+    <br />
+    <fb-search />
+    <br />
+    <fb-paginator />
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BooksComponent {

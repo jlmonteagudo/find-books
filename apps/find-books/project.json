@@ -19,7 +19,10 @@
           "apps/find-books/src/favicon.ico",
           "apps/find-books/src/assets"
         ],
-        "styles": ["apps/find-books/src/styles.scss"],
+        "styles": [
+          "apps/find-books/src/styles.scss",
+          "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+        ],
         "scripts": []
       },
       "configurations": {
