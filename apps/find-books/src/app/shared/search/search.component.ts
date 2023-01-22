@@ -29,6 +29,14 @@ import { MatIconModule } from '@angular/material/icon';
       </button>
     </mat-form-field>
   `,
+  styles: [
+    `
+      mat-form-field {
+        min-width: 500px;
+        margin-right: 10px;
+      }
+    `,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent {

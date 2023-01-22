@@ -15,7 +15,7 @@ import { LanguageSelectorComponent } from '../../shared/language-selector/langua
     MatIconModule,
     LanguageSelectorComponent,
   ],
-  template: ` <mat-toolbar color="primary">
+  template: ` <mat-toolbar color="primary" class="stickyBar">
     <span>Find Books</span>
     <span class="spacer"></span>
     <fb-language-selector />
@@ -24,6 +24,11 @@ import { LanguageSelectorComponent } from '../../shared/language-selector/langua
     `
       .spacer {
         flex: 1 1 auto;
+      }
+      .stickyBar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
       }
     `,
   ],

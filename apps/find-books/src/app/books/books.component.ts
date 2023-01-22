@@ -33,14 +33,21 @@ import { BooksListComponent } from './components/books-list.component';
   template: `
     <fb-search />
     <fb-paginator *ngIf="booksLoaded$ | async" />
-    <div>
-      <mat-progress-bar
-        mode="indeterminate"
-        *ngIf="isLoading$ | async"
-      ></mat-progress-bar>
-      <fb-books-list [books]="books$ | async" />
-    </div>
+    <mat-progress-bar
+      mode="indeterminate"
+      *ngIf="isLoading$ | async"
+    ></mat-progress-bar>
+    <fb-books-list [books]="books$ | async" />
   `,
+  styles: [
+    `
+      :host {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    `,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [BooksStore, SearchStore, PaginatorStore],
 })
