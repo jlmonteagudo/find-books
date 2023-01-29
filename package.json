@@ -2,7 +2,10 @@
   "name": "find-books-workspace",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "nx run find-books:serve:development",
+    "build": "nx run find-books:build:production"
+  },
   "private": true,
   "devDependencies": {
     "@angular-devkit/build-angular": "~15.1.0",
