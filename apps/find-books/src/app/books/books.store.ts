@@ -13,12 +13,14 @@ export interface BooksState {
   isLoading: boolean;
   books: Book[];
   errorMessage: string;
+  selectedBook: Book | undefined;
 }
 
 const INITIAL_STATE: BooksState = {
   isLoading: false,
   books: [],
   errorMessage: '',
+  selectedBook: undefined,
 };
 
 @Injectable()
@@ -42,6 +44,10 @@ export class BooksStore extends ComponentStore<BooksState> {
   readonly errorMessage$: Observable<string> = this.select(
     (state) => state.errorMessage
   );
+  readonly selectedBook$: Observable<Book | undefined> = this.select(
+    (state) => state.selectedBook
+  );
+
   readonly findBooksCriteria$: Observable<FindBooksCriteria> = this.select(
     this.searchStore.searchTerm$.pipe(debounceTime(500)),
     this.paginatorStore.pageSize$,
@@ -55,7 +61,7 @@ export class BooksStore extends ComponentStore<BooksState> {
     })
   );
 
-  readonly findBooks = this.effect((criteria$: Observable<FindBooksCriteria>) =>
+  readonly loadBooks = this.effect((criteria$: Observable<FindBooksCriteria>) =>
     criteria$.pipe(
       tap(() => this.patchState({ isLoading: true })),
       switchMap((criteria) =>
@@ -82,4 +88,32 @@ export class BooksStore extends ComponentStore<BooksState> {
       )
     )
   );
+
+  readonly loadSelectedBook = this.effect((id$: Observable<string>) =>
+    id$.pipe(
+      switchMap((id) => {
+        /*
+        This commented code will be better if when finding many 
+        books would return the description in HTML format
+
+        const book = this.get().books.find((book) => book.id === id);
+        const book$ = book ? of(book) : this.booksService.findOne(id);
+        */
+        const book$ = this.booksService.findOne(id);
+        return book$.pipe(
+          tapResponse(
+            (selectedBook) => this.patchState({ selectedBook }),
+            (error: Error) => {
+              this.patchState({
+                errorMessage: error.message,
+              });
+            }
+          )
+        );
+      })
+    )
+  );
+
+  readonly updateSeletedBook = (selectedBook: Book | undefined) =>
+    this.patchState({ selectedBook });
 }

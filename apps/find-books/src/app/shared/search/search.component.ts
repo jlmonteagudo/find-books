@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  Input,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchStore } from './search.store';
 import { MatInputModule } from '@angular/material/input';
@@ -15,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
       <input
         matInput
         type="text"
+        [value]="searchTerm"
         #searchInput
         (keyup)="handleSearchTermChanged(searchInput.value)"
       />
@@ -41,6 +47,8 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class SearchComponent {
   private readonly searchStore = inject(SearchStore);
+
+  @Input() searchTerm!: string | null;
 
   searchTerm$ = this.searchStore.searchTerm$;
 

@@ -4,24 +4,29 @@ import { MatCardModule } from '@angular/material/card';
 import { Book } from '../interfaces/books-http-response.interface';
 import { BookAuthorsComponent } from './book-authors.component';
 import { EllipsisPipe } from '../../shared/pipes/ellipsis.pipe';
+import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'fb-book-item',
+  selector: 'fb-book-detail',
   standalone: true,
-  imports: [CommonModule, MatCardModule, BookAuthorsComponent, EllipsisPipe],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatCardModule,
+    BookAuthorsComponent,
+    EllipsisPipe,
+  ],
   template: `
-    <mat-card>
+    <mat-card *ngIf="book">
       <mat-card-title-group>
+        <mat-card-title>{{ title }}</mat-card-title>
+        <mat-card-subtitle *ngIf="subtitle">{{ subtitle }}</mat-card-subtitle>
         <img mat-card-sm-image *ngIf="thumbnail" [src]="thumbnail" />
-        <mat-card-title>{{ title | fbEllipsis : 35 }}</mat-card-title>
-        <mat-card-subtitle *ngIf="subtitle">{{
-          subtitle | fbEllipsis : 40
-        }}</mat-card-subtitle>
       </mat-card-title-group>
       <mat-card-content>
-        <p *ngIf="description">{{ description | fbEllipsis }}</p>
+        <p [innerHtml]="description"></p>
       </mat-card-content>
-      <mat-card-footer>
+      <mat-card-footer class="footer">
         <fb-book-authors [book]="book" />
       </mat-card-footer>
     </mat-card>
@@ -37,7 +42,7 @@ import { EllipsisPipe } from '../../shared/pipes/ellipsis.pipe';
       }
 
       mat-card {
-        width: 400px;
+        max-width: 800px;
         margin: 15px;
         display: flex;
         flex-flow: column;
@@ -83,28 +88,28 @@ import { EllipsisPipe } from '../../shared/pipes/ellipsis.pipe';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BookItemComponent {
-  @Input() book!: Book;
+export class BookDetailComponent {
+  @Input() book: Book | undefined | null;
 
   get id() {
-    return this.book.id;
+    return this.book?.id;
   }
 
   get title() {
-    return this.book.volumeInfo.title;
+    return this.book?.volumeInfo.title;
   }
 
   get subtitle() {
-    return this.book.volumeInfo.subtitle;
+    return this.book?.volumeInfo.subtitle;
   }
 
   get description() {
-    return this.book.volumeInfo.description;
+    return this.book?.volumeInfo.description;
   }
 
   get thumbnail(): string | boolean {
-    if (this.book.volumeInfo.imageLinks) {
-      return this.book.volumeInfo.imageLinks.smallThumbnail.replace(
+    if (this.book?.volumeInfo.imageLinks) {
+      return this.book?.volumeInfo.imageLinks.smallThumbnail.replace(
         'http:',
         ''
       );

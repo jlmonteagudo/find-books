@@ -1,14 +1,17 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Book } from '../interfaces/books-http-response.interface';
-import { BookItemComponent } from './book-item.component';
+import { BookListItemComponent } from './book-list-item.component';
 
 @Component({
   selector: 'fb-books-list',
   standalone: true,
-  imports: [CommonModule, BookItemComponent],
+  imports: [CommonModule, BookListItemComponent],
   template: `
-    <fb-book-item *ngFor="let book of books" [book]="book"></fb-book-item>
+    <fb-book-list-item
+      *ngFor="let book of books"
+      [book]="book"
+    ></fb-book-list-item>
   `,
   styles: [
     `
